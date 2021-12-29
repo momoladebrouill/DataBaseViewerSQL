@@ -1,4 +1,6 @@
-def csv_to_sql(file,table,con):
+
+import csv
+def csv_to_sql(file,table,con,cursor):
     a=csv.reader(file)
     cursor.execute(f'drop table if exists {table}')
     for elem in a:
@@ -9,6 +11,7 @@ def csv_to_sql(file,table,con):
             text+=toadd[:-1]+");"
             columns=elem
             cols="("+','.join(elem)+")"
+            ^print('')
             cursor.execute(text)
             con.commit()
         else:
