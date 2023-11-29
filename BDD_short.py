@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from csv_to_sql import csv_to_sql
 
-con=sqlite3.connect("temp.db")
+con=sqlite3.connect("ipt.sqlite3")
 cursor=con.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS
@@ -37,6 +37,7 @@ def execute():
     sqlite3.PARSE_COLNAMES=True
     cursor.execute(e.get("1.0","end"))
     con.commit()
+
     tablo.delete(*tablo.get_children())
     titres=[kaka[0] for kaka in cursor.description]
     tablo.config(columns=titres)
@@ -55,7 +56,7 @@ f.configure(background="#8b0000")
 f.geometry("800x600")
 f.resizable(False,False)
 
-csv_to_sql(open("trucs.csv","r"),'users',con,cursor)
+# csv_to_sql(open("tr.csv","r"),'users',con,cursor)
 
 e=tk.Text(f,background="#6c1413",foreground="white",font=("Consolas",12))
 e.insert("1.0","select * from users;")
@@ -66,9 +67,11 @@ b.pack()
 f.style=ttk.Style()
 
 f.style.configure('TreeView', background = 'red', foreground = 'white', width = 20, borderwidth=1, focusthickness=3, focuscolor='none')
-
+f.attributes("-fullscreen", True)
 tablo=ttk.Treeview(f)
 tablo.pack()
+b=tk.Button(f,command=f.quit,text="tchao")
+b.pack()
 f.bind('<Control-s>',lambda event:con.commit())
 f.bind('<Control-r>',lambda event:con.rollback())
 f.bind('<KeyRelease>',lambda event:check())

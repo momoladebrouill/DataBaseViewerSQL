@@ -1,7 +1,7 @@
 
 import csv
 def csv_to_sql(file,table,con,cursor):
-    a=csv.reader(file)
+    a = csv.reader(file)
     cursor.execute(f'drop table if exists {table}')
     for elem in a:
         if a.line_num==1:
@@ -11,7 +11,7 @@ def csv_to_sql(file,table,con,cursor):
             text+=toadd[:-1]+");"
             columns=elem
             cols="("+','.join(elem)+")"
-            ^print('')
+            print('')
             cursor.execute(text)
             con.commit()
         else:
